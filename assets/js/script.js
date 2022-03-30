@@ -1,3 +1,4 @@
+var taskIdCounter = 0;
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 
@@ -27,6 +28,9 @@ var createTaskEl = function (taskDataObj) {
     var listItemEl = document.createElement('li');
     listItemEl.className = 'task-item';
 
+    // add task id as a custom attribute
+    listItemEl.setAttribute("data-task-id",taskIdCounter);
+
     //create div to hold task info and add to list item
     var taskInfoE1 = document.createElement('div');
     taskInfoE1.className = 'task-info';     // give it a class name
@@ -36,6 +40,9 @@ var createTaskEl = function (taskDataObj) {
 
     // add entire list item to list
     tasksToDoEl.appendChild(listItemEl);              // append this element to the task list
+
+    // Increase task counter for next unique id
+    taskIdCounter++;
 };
 
 formEl.addEventListener("submit", taskFormHandler); // called onsubmit
@@ -47,30 +54,20 @@ formEl.addEventListener("submit", taskFormHandler); // called onsubmit
 
 
 
-// Create a new feature branch. We'll create a new feature branch where we will build the form. ✅
+// Create a new feature branch. We'll create a feature branch that corresponds to the GitHub issue we're addressing in this lesson.
 
-// Add a task form to HTML. We'll add an HTML form that will allow the user to enter the task name and type.
+// Add two new lists in the HTML. We'll add a Tasks In Progress and a Tasks Completed list to Taskmaster.
 
-// Handle form submission. We'll use JavaScript to add a task to the list when the "Add Task" button is clicked.
+// Apply a unique id to each task. We'll create an id that uniquely identifies each task that's created.
 
-// Target the HTML elements with the pertinent data.
+// Dynamically create task buttons for each task. Once we have an id for each task, we can start adding buttons and dropdowns that reference the id. Because a task and its id are dynamically created, these buttons and dropdowns will also be dynamic.
 
-// Read and store the content that those elements hold.
+// Add the ability to delete a task. We'll use event listeners to allow the user to delete tasks.
 
-// Use that content to create a new task.
+// Load the task into the form to be edited. Users might want to edit existing tasks. We'll enable this by making sure the right task data loads in the editing form.
 
-// Capture form field values. We'll use JavaScript to capture the unique information the user enters (the task name and type).
+// Save the edited task. Users will want to save their edits to a task; we'll make sure they can do that.
 
-// Organize functionality. We'll refactor the code to make it more maintainable.
+// Move the task based on status. If the user changes the status of a task, we'll make sure it is moved to the appropriate list.
 
-        // Rename the handler function to be a little more specific to the event it's handling.
-
-        // Create a new function to take in the task's name and title as arguments and create the HTML elements that get added to the page.
-
-        // Move the code that creates and adds HTML elements from the handler function into the newly created function.
-
-        // Update the handler function to send the task name and type values from the form to the newly created function.
-
-// Address usability concerns. We'll improve the user experience by validating form input and resetting the form after the user clicks the "Add Task" button.
-
-// Save our progress with Git. We'll commit and push our changes up to GitHub
+// Save your progress with Git. You did it! It's time to merge your feature branch into the develop branch and commit your changes to GitHub.
