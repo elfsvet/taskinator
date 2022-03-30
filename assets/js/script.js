@@ -183,14 +183,107 @@ var taskStatusChangeHandler = function (event) {
     saveTasks();
 };
 
-var saveTasks = function() {
+var saveTasks = function () {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 };
+// Gets task items from localStorage.
+
+// Converts tasks from the string format back into an array of objects.
+
+// Iterates through a tasks array and creates task elements on the page from it.
+var loadTasks = function () {
+    tasks = localStorage.getItem("tasks", tasks);
+    console.log(tasks);
+    // Check if tasks is equal to null by using an if statement.
+    if (!tasks) {
+        // If it is, set tasks back to an empty array by reassigning it to [] and adding a return false. We don't want this function to keep running with no tasks to load onto the page.
+        tasks = [];
+        return false;
+    }
+    // If it's not null, we don't have to worry about it and we can skip the if statement's code block.
+    tasks = JSON.parse(tasks);
+    console.log(tasks);
+    for (var i = 0; i < tasks.length; i++) {
+        // To keep the id for each task in sync, reassign the id property of task[i] to the value of taskIdCounter.
+        tasks[i].id = taskIdCounter;
+        // Add console.log(tasks[i]) after reassigning the id property. This way, we can see them printing in order in the console.
+        console.log(tasks[i]);
+        // Create a <li> element and store it in a variable called listItemEl.
+        var listItemEl = document.createElement("li");
+        // Give it a classname attribute of task-item.
+        listItemEl.className = 'task-item';
+        // Using setAttribute(), give it a data-task-id attribute with a value of tasks[i].id.
+        listItemEl.setAttribute("data-task-id", tasks[i].id);
+        // Create a <div> element and store it in a variable called taskInfoEl.
+        var taskInfoEl = document.createElement('div');
+        // Give it a classname property of task-info to set the HTML class attribute.
+        taskInfoEl.className = "task-info";
+        // Set its innerHTML property to the following:
+        taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span class='task-type'>" + tasks[i].type + "</span>";
+        // Append taskInfoEl to listItemEl.
+        listItemEl.appendChild(taskInfoEl);
+        // Create the actions for the task by creating a variable called taskActionsEl and giving it a value of createTaskActions() with tasks[i].id as the argument.
+        var taskActionsEl = createTaskActions(tasks[i].id);
+        // Append taskActionsEl to listItemEl.
+        listItemEl.appendChild(taskActionsEl);
+        // Check that taskActionsEl was appended to listItemEl correctly by using a console.log(listItemEl);. It should look like the following image:
+        console.log(listItemEl);
+        // With an if statement, check if the value of tasks[i].status is equal to to do.
+        if(tasks[i].status === "to do"){
+        // If yes, use listItemEl.querySelector("select[name='status-change']").selectedIndex and set it equal to 0.
+        listItemEl.querySelector("select[name='status-change']").selectedIndex = 0;
+        // Append listItemEl to tasksToDoEl.
+        tasksToDoEl.appendChild(listItemEl);
+        // With else if, check if the value of tasks[i].status is equal to in progress.
+        } else if (tasks[i].status === "in progress"){
+        // If yes, use listItemEl.querySelector("select[name='status-change']").selectedIndex and set it equal to 1.
+        listItemEl.querySelector("select[name='status-change']").selectedIndex = 1;
+        // Append listItemEl to tasksInProgressEl.
+        tasksInProgressEl.appendChild(listItemEl);
+        // With else if, check if the value of tasks[i].status is equal to complete.
+        } else if (tasks[i].status === "complete"){
+        // If yes, use listItemEl.querySelector("select[name='status-change']").selectedIndex and set it equal to 2.
+        listItemEl.querySelector("select[name='status-change']").selectedIndex = 2;
+        // Append listItemEl to tasksCompletedEl.
+        tasksCompletedEl.appendChild(listItemEl);}
+        // Increase taskIdCounter by 1.
+        taskIdCounter++;
+        // Add one more console.log(listItemEl) after incrementing the
+        console.log(listItemEl);
+
+    }
+
+
+
+
+};
+/* var createTaskEl = function (taskDataObj) {
+    // create list item
+    var listItemEl = document.createElement('li');
+    listItemEl.className = 'task-item';
+    // add task id as a custom attribute
+    listItemEl.setAttribute("data-task-id", taskIdCounter);
+    //create div to hold task info and add to list item
+    var taskInfoE1 = document.createElement('div');
+    taskInfoE1.className = 'task-info';     // give it a class name
+    // add html content to div
+    taskInfoE1.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>"; // if we won't change here we will get a lexical scoping error
+    listItemEl.appendChild(taskInfoE1);
+    var taskActionsEl = createTaskActions(taskIdCounter);
+    listItemEl.appendChild(taskActionsEl);
+    // add entire list item to list
+    tasksToDoEl.appendChild(listItemEl);              // append this element to the task list
+    taskDataObj.id = taskIdCounter;
+    tasks.push(taskDataObj);
+    saveTasks(); // saves array to the localStorage
+    // Increase task counter for next unique id
+    taskIdCounter++;
+}; */
 
 formEl.addEventListener("submit", taskFormHandler); // called onsubmit
 pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
-
+loadTasks();
 
 
 
