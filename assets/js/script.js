@@ -4,6 +4,7 @@ var tasksToDoEl = document.querySelector("#tasks-to-do");
 var pageContentEl = document.querySelector("#page-content");
 var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 var tasksCompletedEl = document.querySelector("#tasks-completed");
+var tasks = []; // empty tasks array to store objects of tasks
 
 var taskFormHandler = function (event) { // don't forget to put argument value as event
     event.preventDefault();
@@ -26,7 +27,8 @@ var taskFormHandler = function (event) { // don't forget to put argument value a
     else {
         var taskDataObj = {
             name: taskNameInput,
-            type: taskTypeInput
+            type: taskTypeInput,
+            status: "to do"
         };
 
         createTaskEl(taskDataObj);
@@ -50,8 +52,12 @@ var createTaskEl = function (taskDataObj) {
     listItemEl.appendChild(taskActionsEl);
     // add entire list item to list
     tasksToDoEl.appendChild(listItemEl);              // append this element to the task list
+    taskDataObj.id = taskIdCounter;
+    tasks.push(taskDataObj);
     // Increase task counter for next unique id
     taskIdCounter++;
+    console.log(taskDataObj);
+
 };
 
 var createTaskActions = function (taskId) {
@@ -118,6 +124,18 @@ var editTask = function (taskId) {
 var deleteTask = function (taskId) {
     var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
     taskSelected.remove();
+    // create new array to hold updated list of tasks
+    var updatedTaskArr = [];
+    // loop through current tasks
+    for (var i = 0; i < tasks.length; i++) {
+        // if tasks[i].id doesn't match the value of taskId, let's keep that task and push it into the new array
+        if (tasks[i].id !== parseInt(taskId)) {
+            updatedTaskArr.push(tasks[i]);
+        }
+    }
+    // reassign tasks array to be the same as updatedTaskArr
+    tasks = updatedTaskArr;
+    console.log(tasks);
 };
 
 var completeEditTask = function (taskName, taskType, taskId) {
@@ -127,7 +145,13 @@ var completeEditTask = function (taskName, taskType, taskId) {
     // set new values
     taskSelected.querySelector("h3.task-name").textContent = taskName;
     taskSelected.querySelector("span.task-type").textContent = taskType;
-
+    // loop through tasks array and task object with new content
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(taskId)) { // needs to be number from string
+            tasks[i].name = taskName;
+            tasks[i].type = taskType;
+        }
+    };
     alert("Task Updated!");
 
     formEl.removeAttribute("data-task-id");
@@ -135,8 +159,6 @@ var completeEditTask = function (taskName, taskType, taskId) {
 };
 
 var taskStatusChangeHandler = function (event) {
-    console.log(event.target.value);
-
     // get the task item's id
     var taskId = event.target.getAttribute("data-task-id");
     // find the parent task item element based on the id
@@ -152,8 +174,37 @@ var taskStatusChangeHandler = function (event) {
     else if (statusValue === "completed") {
         tasksCompletedEl.appendChild(taskSelected);
     }
+
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(taskId)) {
+            tasks[i].status = statusValue;
+        }
+    }
 };
 
 formEl.addEventListener("submit", taskFormHandler); // called onsubmit
 pageContentEl.addEventListener("click", taskButtonHandler);
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
+
+
+
+
+// Create a feature branch. We'll create a feature branch that corresponds to the GitHub issue we're addressing in this lesson.
+
+// Save tasks to an array. We'll organize all the elements that correspond to a task into an object, and save those objects into an array.
+
+// Save tasks to localStorage. We'll implement the ability to save our tasks to localStorage so that they can be retrieved later.
+
+// Load tasks from localStorage. We'll add the ability to retrieve saved tasks from localStorage.
+
+// Optimize the code. We'll reduce our technical debt by refactoring the code. This is a best practice and a good habit to develop.
+
+// Save our progress with Git. We'll merge the feature branch into the develop branch and push our changes to GitHub.
+
+// Deploy to GitHub Pages. We'll deploy our finished application to GitHub Pages so we can show it off to the world and use it anywhere!
+
+// Use localStorage to maintain persistence.
+
+// Refactor the codebase to accommodate persistence.
+
+// Deploy to GitHub Pages.
