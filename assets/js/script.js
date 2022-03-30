@@ -1,13 +1,22 @@
-// var buttonEl = document.querySelector("#save-task"); // targets button by id
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 
-var createTaskHandler = function (event) { // don't forget to put argument value as event
-
+var taskFormHandler = function (event) { // don't forget to put argument value as event
     event.preventDefault();
     var taskNameInput = document.querySelector("input[name='task-name']").value;
     var taskTypeInput = document.querySelector("select[name='task-type']").value;
 
+    // package up data as an object
+    var taskDataObj = {
+        name: taskNameInput,
+        type: taskTypeInput
+    };
+
+    //send it as an argument to createTaskEl
+    createTaskEl(taskDataObj);
+};
+
+var createTaskEl = function (taskDataObj) {
     // create list item
     var listItemEl = document.createElement('li');
     listItemEl.className = 'task-item';
@@ -15,17 +24,15 @@ var createTaskHandler = function (event) { // don't forget to put argument value
     //create div to hold task info and add to list item
     var taskInfoE1 = document.createElement('div');
     taskInfoE1.className = 'task-info';     // give it a class name
-
     // add html content to div
-    taskInfoE1.innerHTML = "<h3 class='task-name'>" + taskNameInput + "</h3><span class='task-type'>" + taskTypeInput + "</span>";
+    taskInfoE1.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span class='task-type'>" + taskDataObj.type + "</span>"; // if we won't change here we will get a lexical scoping error
     listItemEl.appendChild(taskInfoE1);
 
     // add entire list item to list
     tasksToDoEl.appendChild(listItemEl);              // append this element to the task list
-}
+};
 
-formEl.addEventListener("submit", createTaskHandler); // called onsubmit
-// buttonEl.addEventListener("click", createTaskHandler); // adds listen click event to button
+formEl.addEventListener("submit", taskFormHandler); // called onsubmit
 
 
 
@@ -49,6 +56,14 @@ formEl.addEventListener("submit", createTaskHandler); // called onsubmit
 // Capture form field values. We'll use JavaScript to capture the unique information the user enters (the task name and type).
 
 // Organize functionality. We'll refactor the code to make it more maintainable.
+
+        // Rename the handler function to be a little more specific to the event it's handling.
+
+        // Create a new function to take in the task's name and title as arguments and create the HTML elements that get added to the page.
+
+        // Move the code that creates and adds HTML elements from the handler function into the newly created function.
+
+        // Update the handler function to send the task name and type values from the form to the newly created function.
 
 // Address usability concerns. We'll improve the user experience by validating form input and resetting the form after the user clicks the "Add Task" button.
 
