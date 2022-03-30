@@ -2,6 +2,8 @@ var taskIdCounter = 0;
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 var pageContentEl = document.querySelector("#page-content");
+var tasksInProgressEl = document.querySelector("#tasks-in-progress");
+var tasksCompletedEl = document.querySelector("#tasks-completed");
 
 var taskFormHandler = function (event) { // don't forget to put argument value as event
     event.preventDefault();
@@ -130,12 +132,31 @@ var completeEditTask = function (taskName, taskType, taskId) {
 
     formEl.removeAttribute("data-task-id");
     document.querySelector("#save-task").textContent = "Add Task";
+};
 
+var taskStatusChangeHandler = function (event) {
+    console.log(event.target.value);
+
+    // get the task item's id
+    var taskId = event.target.getAttribute("data-task-id");
+    // find the parent task item element based on the id
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+    // get the currently selected option's value and convert to lowercase
+    var statusValue = event.target.value.toLowerCase();
+    if (statusValue === "to do") {
+        tasksToDoEl.appendChild(taskSelected);
+    }
+    else if (statusValue === "in progress") {
+        tasksInProgressEl.appendChild(taskSelected);
+    }
+    else if (statusValue === "completed") {
+        tasksCompletedEl.appendChild(taskSelected);
+    }
 };
 
 formEl.addEventListener("submit", taskFormHandler); // called onsubmit
 pageContentEl.addEventListener("click", taskButtonHandler);
-
+pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
 
 
@@ -153,14 +174,14 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 
 // Add the ability to delete a task. We'll use event listeners to allow the user to delete tasks.   ✅
 
-// Load the task into the form to be edited. Users might want to edit existing tasks. We'll enable this by making sure the right task data loads in the editing form.
+// Load the task into the form to be edited. Users might want to edit existing tasks. We'll enable this by making sure the right task data loads in the editing form. ✅
 
-// * Loading the task's current information into the form.
+// * Loading the task's current information into the form. ✅
 
-// * On form submit, updating the task element's content.
+// * On form submit, updating the task element's content. ✅
 
-// Save the edited task. Users will want to save their edits to a task; we'll make sure they can do that.
+// Save the edited task. Users will want to save their edits to a task; we'll make sure they can do that. ✅
 
-// Move the task based on status. If the user changes the status of a task, we'll make sure it is moved to the appropriate list.
+// Move the task based on status. If the user changes the status of a task, we'll make sure it is moved to the appropriate list. ✅
 
-// Save your progress with Git. You did it! It's time to merge your feature branch into the develop branch and commit your changes to GitHub.
+// Save your progress with Git. You did it! It's time to merge your feature branch into the develop branch and commit your changes to GitHub. 
