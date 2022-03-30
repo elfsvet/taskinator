@@ -75,12 +75,33 @@ var createTaskActions = function (taskId) {
 };
 
 var taskButtonHandler = function(event){
-    if (event.target.matches(".delete-btn")) {
+    // get target element from event
+    var targetEl = event.target;
+    // edit button was clicked
+    if (targetEl.matches(".edit-btn")) {
+        // get the element's task id
+        var taskId = targetEl.getAttribute("data-task-id");
+        editTask(taskId);
+    }
+
+    // delete button was clicked
+    else if (targetEl.matches(".delete-btn")) {
         // get the element's task id
         var taskId = event.target.getAttribute("data-task-id");
         deleteTask(taskId);
     }
 };
+var editTask = function(taskId){
+    // get task list item element
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+    // get content from task name and type
+    var taskName = taskSelected.querySelector("h3.task-name").textContent;
+    var taskType = taskSelected.querySelector("span.task-type").textContent;
+    document.querySelector("input[name='task-name']").value = taskName;
+    document.querySelector("select[name='task-type']").value = taskType;
+    document.querySelector("#save-task").textContent = "Save Task";
+    formEl.setAttribute("data-item-id", taskId);
+}
 
 var deleteTask = function(taskId){
     var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
@@ -105,9 +126,13 @@ pageContentEl.addEventListener("click", taskButtonHandler);
 
 // Dynamically create task buttons for each task. Once we have an id for each task, we can start adding buttons and dropdowns that reference the id. Because a task and its id are dynamically created, these buttons and dropdowns will also be dynamic.✅
 
-// Add the ability to delete a task. We'll use event listeners to allow the user to delete tasks.   🛑!!!
+// Add the ability to delete a task. We'll use event listeners to allow the user to delete tasks.   ✅
 
 // Load the task into the form to be edited. Users might want to edit existing tasks. We'll enable this by making sure the right task data loads in the editing form.
+
+// * Loading the task's current information into the form.
+
+// * On form submit, updating the task element's content.
 
 // Save the edited task. Users will want to save their edits to a task; we'll make sure they can do that.
 
