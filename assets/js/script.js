@@ -98,15 +98,15 @@ formEl.addEventListener("submit", taskFormHandler); // called onsubmit
 
 
 
-// Create a new feature branch. We'll create a feature branch that corresponds to the GitHub issue we're addressing in this lesson.
+// Create a new feature branch. We'll create a feature branch that corresponds to the GitHub issue we're addressing in this lesson.✅
 
-// Add two new lists in the HTML. We'll add a Tasks In Progress and a Tasks Completed list to Taskmaster.
+// Add two new lists in the HTML. We'll add a Tasks In Progress and a Tasks Completed list to Taskmaster.✅
 
-// Apply a unique id to each task. We'll create an id that uniquely identifies each task that's created.
+// Apply a unique id to each task. We'll create an id that uniquely identifies each task that's created.✅
 
-// Dynamically create task buttons for each task. Once we have an id for each task, we can start adding buttons and dropdowns that reference the id. Because a task and its id are dynamically created, these buttons and dropdowns will also be dynamic.
+// Dynamically create task buttons for each task. Once we have an id for each task, we can start adding buttons and dropdowns that reference the id. Because a task and its id are dynamically created, these buttons and dropdowns will also be dynamic.✅
 
-// Add the ability to delete a task. We'll use event listeners to allow the user to delete tasks.
+// Add the ability to delete a task. We'll use event listeners to allow the user to delete tasks.   🛑!!!
 
 // Load the task into the form to be edited. Users might want to edit existing tasks. We'll enable this by making sure the right task data loads in the editing form.
 
