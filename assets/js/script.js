@@ -26,8 +26,8 @@ var taskFormHandler = function (event) { // don't forget to put argument value a
 
     // check if task is new or one being edited by seeing if it has a data-task-id attribute
     var isEdit = formEl.hasAttribute("data-task-id");
-    // has data attribute, so get task id and call function to complete edit process
-    if (isEdit) {
+
+    if (isEdit) {     // has data attribute, so get task id and call function to complete edit process
         var taskId = formEl.getAttribute("data-task-id");
         completeEditTask(taskNameInput, taskTypeInput, taskId);
     } else { // no data attribute, so create object as normal and pass to createTaskEl function
